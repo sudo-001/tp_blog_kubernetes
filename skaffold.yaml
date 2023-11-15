@@ -1,0 +1,34 @@
+apiVersion: skaffold/v2beta18
+kind: Config
+metadata:
+  name: my-app
+build:
+  artifacts:
+    - image: client-image:latest
+      context: client
+      docker:
+        dockerfile: Dockerfile
+    - image: comments-image:latest
+      context: comments
+      docker:
+        dockerfile: Dockerfile
+    - image: posts-image:latest
+      context: posts
+      docker:
+        dockerfile: Dockerfile
+    - image: query-image:latest
+      context: query
+      docker:
+        dockerfile: Dockerfile
+    - image: moderation-image:latest
+      context: moderation
+      docker:
+        dockerfile: Dockerfile
+    - image: event-bus-image:latest
+      context: event-bus
+      docker:
+        dockerfile: Dockerfile
+deploy:
+  kubectl:
+    manifests:
+      - infra/K8s/*.yaml

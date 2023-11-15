@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: query-pod
+spec:
+  containers:
+    - name: query
+      image: query-image:latest
+      imagePullPolicy: Never
+      ports:
+        - containerPort: 4002
+      env:
+        - name: EVENT_BUS_URL
+          value: "http://event-bus-service:4005/events"

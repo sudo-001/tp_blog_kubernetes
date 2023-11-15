@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: comments-pod
+spec:
+  containers:
+    - name: comments
+      image: comments-image:latest
+      imagePullPolicy: Never
+      ports:
+        - containerPort: 4001
+      env:
+        - name: EVENT_BUS_URL
+          value: "http://event-bus-service:4005/events"

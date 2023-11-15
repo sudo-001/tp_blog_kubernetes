@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: event-bus-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: event-bus
+  template:
+    metadata:
+      labels:
+        app: event-bus
+    spec:
+      containers:
+        - name: event-bus
+          image: event-bus-image:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 4005
+          env:
+            - name: POSTS_URL
+              value: "http://posts-service:4000/events"
+            - name: COMMENT_URL
+              value: "http://comments-service:4001/events"
+            - name: MODERATION_URL
+              value: "http://moderation-service:4003/events"
+            - name: QUERY_URL
+              value: "http://query-service:4002/events"

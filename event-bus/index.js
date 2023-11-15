@@ -7,21 +7,26 @@ app.use(bodyParser.json());
 
 const events = [];
 
+const postsUrl = process.env.POSTS_URL || "http://localhost:4000/events";
+const commentsUrl = process.env.COMMENT_URL || "http://localhost:4001/events";
+const queryUrl = process.env.QUERY_URL || "http://localhost:4002/events";
+const moderation = process.env.MODERATION_URL || "http://localhost:4003/events";
+
 app.post("/events", (req, res) => {
   const event = req.body;
 
   events.push(event);
 
-  axios.post("http://localhost:4000/events", event).catch((err) => {
+  axios.post(postsUrl, event).catch((err) => {
     console.log(err.message);
   });
-  axios.post("http://localhost:4001/events", event).catch((err) => {
+  axios.post(commentsUrl, event).catch((err) => {
     console.log(err.message);
   });
-  axios.post("http://localhost:4002/events", event).catch((err) => {
+  axios.post(queryUrl, event).catch((err) => {
     console.log(err.message);
   });
-  axios.post("http://localhost:4003/events", event).catch((err) => {
+  axios.post(moderation, event).catch((err) => {
     console.log(err.message);
   });
   res.send({ status: "OK" });

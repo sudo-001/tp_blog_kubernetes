@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moderation-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: moderation
+  template:
+    metadata:
+      labels:
+        app: moderation
+    spec:
+      containers:
+        - name: moderation
+          image: moderation-image:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 4003
+          env:
+            - name: EVENT_BUS_URL
+              value: "http://event-bus-service:4005/events"

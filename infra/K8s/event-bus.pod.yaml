@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: event-bus-pod
+spec:
+  containers:
+    - name: event-bus
+      image: event-bus-image:latest
+      imagePullPolicy: Never
+      ports:
+        - containerPort: 4005
+      env:
+        - name: POSTS_URL
+          value: "http://posts-service:4000/events"
+        - name: COMMENT_URL
+          value: "http://comment-service:4001/events"
+        - name: MODERATION_URL
+          value: "http://moderation-service:4003/events"
+        - name: QUERY_URL
+          value: "http://query-service:4002/events"
